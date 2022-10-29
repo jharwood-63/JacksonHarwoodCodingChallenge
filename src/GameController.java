@@ -35,26 +35,30 @@ public class GameController {
 
             while (!display.isWordGuessed() && numBodyParts > 0) {
                 String guessedLetter = display.promptGuess();
-                if (!display.alreadyGuessed(guessedLetter)) {
-                    numGuessesMade++;
-                    boolean isInWord = display.updateGuessedWord(selectedWord, guessedLetter);
+                if (guessedLetter.length() == 1) {
+                    if (!display.alreadyGuessed(guessedLetter)) {
+                        numGuessesMade++;
+                        boolean isInWord = display.updateGuessedWord(selectedWord, guessedLetter);
 
-                    if (isInWord) {
-                        numCorrect++;
-                        if (useGallows) {
-                            display.displayGallows();
-                        }
-                    }
-                    else {
-                        if (useGallows) {
-                            display.updateGallows();
-                            numBodyParts--;
-                        }
+                        if (isInWord) {
+                            numCorrect++;
+                            if (useGallows) {
+                                display.displayGallows();
+                            }
+                        } else {
+                            if (useGallows) {
+                                display.updateGallows();
+                                numBodyParts--;
+                            }
 
-                        numIncorrect++;
+                            numIncorrect++;
+                        }
+                        display.displayNumGuesses(numGuessesMade, numIncorrect, numCorrect);
+                        display.displayDivider();
                     }
-                    display.displayNumGuesses(numGuessesMade, numIncorrect, numCorrect);
-                    display.displayDivider();
+                }
+                else {
+                    display.displayWarning();
                 }
             }
 

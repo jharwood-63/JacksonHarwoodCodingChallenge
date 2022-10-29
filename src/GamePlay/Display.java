@@ -14,16 +14,40 @@ public class Display {
         return scanner.nextLine();
     }
 
+    public void displayWarning() {
+        System.out.println("Please only enter 1 letter at a time");
+    }
+
     public boolean promptContinue() {
         System.out.print("Would you like to continue playing? Enter y or n: ");
         String continuePrompt = scanner.nextLine();
-        return continuePrompt.equalsIgnoreCase("y");
+
+        if (continuePrompt.equalsIgnoreCase("y")) {
+            return true;
+        }
+        else if (continuePrompt.equalsIgnoreCase("n")) {
+            return false;
+        }
+        else {
+            System.out.println("You entered an invalid response! Because you can't follow a simple instruction, you can no longer play");
+            return false;
+        }
     }
 
     public boolean useGallows() {
         System.out.print("Would you like to play with gallows? Enter y or n: ");
         String chooseGallows = scanner.nextLine();
-        return chooseGallows.equalsIgnoreCase("y");
+
+        if (chooseGallows.equalsIgnoreCase("y")) {
+            return true;
+        }
+        else if (chooseGallows.equalsIgnoreCase("n")) {
+            return false;
+        }
+        else {
+            System.out.println("I'm not sure what that means but you are using the gallows because I said so!");
+            return true;
+        }
     }
 
     public void updateGallows() {
