@@ -1,17 +1,21 @@
 import GamePlay.Display;
-import GamePlay.Hangman;
+import GamePlay.Words;
 
 import java.util.Scanner;
 
 public class GameController {
     public static void main(String[] args) {
+        playGame();
+    }
+
+    public static void playGame() {
         Scanner scanner = new Scanner(System.in);
-        Hangman hangman = new Hangman();
+        Words words = new Words();
         Display display = new Display();
 
         boolean continueGame = true;
         int numWords = 10;
-//        int numWordsCorrect = 0;
+        int numWordsCorrect = 0;
         boolean useGallows;
         String selectedWord;
         int numBodyParts;
@@ -21,7 +25,7 @@ public class GameController {
 
         display.displayWelcome();
         while (continueGame && numWords > 0) {
-            selectedWord = hangman.selectWord();
+            selectedWord = words.selectWord();
             display.initializeGuessedWord(selectedWord);
             display.displayNumLetters(selectedWord);
 
@@ -36,6 +40,7 @@ public class GameController {
             String chooseGallows = scanner.nextLine();
             if (chooseGallows.equalsIgnoreCase("y")) {
                 useGallows = true;
+                display.displayGallows();
             }
 
             while (!display.isWordGuessed() && numBodyParts > 0) {
@@ -47,21 +52,27 @@ public class GameController {
                     if (isInWord) {
                         numCorrect++;
                     } else {
-                        //update the gallows
                         if (useGallows) {
+                            display.updateGallows();
                             numBodyParts--;
                         }
 
                         numIncorrect++;
                     }
+                    display.displayNumGuesses(numGuessesMade, numIncorrect, numCorrect);
                 }
                 else {
                     System.out.println("You have already guessed " + guessedLetter + "! Please try again!");
                 }
-                display.displayNumGuesses(numGuessesMade, numIncorrect, numCorrect);
             }
 
-            display.displayResult(selectedWord, numGuessesMade, !(numBodyParts == 0));
+            if (numBodyParts == 0) {
+                display.displayResult(selectedWord, numGuessesMade, false);
+            }
+            else {
+                display.displayResult(selectedWord, numGuessesMade, true);
+                numWordsCorrect++;
+            }
 
             System.out.print("Would you like to continue playing? Enter y or n: ");
             String continuePrompt = scanner.nextLine();
@@ -74,5 +85,6 @@ public class GameController {
         else {
             System.out.println("Thanks for playing!");
         }
+        System.out.println("You got " + numWordsCorrect + " correct out of 10");
     }
 }

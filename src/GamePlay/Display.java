@@ -5,7 +5,73 @@ import java.util.ArrayList;
 public class Display {
     private ArrayList<Character> guessedWord;
     private final ArrayList<String> incorrectLetters = new ArrayList<>();
-    private final char[] bodyParts = {'O', '|', '/', '\\', '/', '\\'};
+    private int numBodyParts = 0;
+
+    public void updateGallows() {
+        numBodyParts++;
+        displayGallows();
+    }
+
+    public void displayGallows() {
+        switch (numBodyParts) {
+            case 0 -> {
+                System.out.println(" ____");
+                System.out.println("|    |");
+                System.out.println("|");
+                System.out.println("|");
+                System.out.println("|");
+                System.out.println("|___");
+            }
+            case 1 -> {
+                System.out.println(" ____");
+                System.out.println("|    |");
+                System.out.println("|    O");
+                System.out.println("|");
+                System.out.println("|");
+                System.out.println("|___");
+            }
+            case 2 -> {
+                System.out.println(" ____");
+                System.out.println("|    |");
+                System.out.println("|    O");
+                System.out.println("|    |");
+                System.out.println("|");
+                System.out.println("|___");
+            }
+            case 3 -> {
+                System.out.println(" ____");
+                System.out.println("|    |");
+                System.out.println("|    O");
+                System.out.println("|   /|");
+                System.out.println("|");
+                System.out.println("|___");
+            }
+            case 4 -> {
+                System.out.println(" ____");
+                System.out.println("|    |");
+                System.out.println("|    O");
+                System.out.println("|   /|\\");
+                System.out.println("|");
+                System.out.println("|___");
+            }
+            case 5 -> {
+                System.out.println(" ____");
+                System.out.println("|    |");
+                System.out.println("|    O");
+                System.out.println("|   /|\\");
+                System.out.println("|   /");
+                System.out.println("|___");
+            }
+            case 6 -> {
+                System.out.println(" ____");
+                System.out.println("|    |");
+                System.out.println("|    O");
+                System.out.println("|   /|\\");
+                System.out.println("|   / \\");
+                System.out.println("|___");
+            }
+        }
+    }
 
     public void displayWelcome() {
         System.out.println("Welcome to Hangman!");

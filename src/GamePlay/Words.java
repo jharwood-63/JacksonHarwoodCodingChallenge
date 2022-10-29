@@ -1,15 +1,14 @@
 package GamePlay;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Hangman {
+public class Words {
     private final List<String> wordList;
     private final int[] usedWordList = {0,0,0,0,0,0,0,0,0,0};
 
-    public Hangman() {
+    public Words() {
         wordList = initializeWordList();
     }
 
