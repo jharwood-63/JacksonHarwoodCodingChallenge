@@ -1,11 +1,36 @@
 package GamePlay;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Display {
+    Scanner scanner = new Scanner(System.in);
     private ArrayList<Character> guessedWord;
     private final ArrayList<String> incorrectLetters = new ArrayList<>();
     private int numBodyParts = 0;
+
+    public String promptGuess() {
+        System.out.print("Please guess a letter: ");
+        return scanner.nextLine();
+    }
+
+    public boolean promptContinue() {
+        System.out.print("Would you like to continue playing? Enter y or n: ");
+        String continuePrompt = scanner.nextLine();
+        return continuePrompt.equalsIgnoreCase("y");
+    }
+
+    public boolean useGallows() {
+        System.out.print("Would you like to play with gallows? Enter y or n: ");
+        String chooseGallows = scanner.nextLine();
+        if (chooseGallows.equalsIgnoreCase("y")) {
+            displayGallows();
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     public void updateGallows() {
         numBodyParts++;
@@ -99,7 +124,8 @@ public class Display {
                         guessedWord.set(i, guessedLetter.charAt(0));
                         numLettersCorrect++;
                     }
-                } else {
+                }
+                else {
                     if (guessedLetter.equals(selectedWord.substring(i))) {
                         guessedWord.set(i, guessedLetter.charAt(0));
                         numLettersCorrect++;
@@ -109,12 +135,14 @@ public class Display {
 
             if (numLettersCorrect == 1) {
                 System.out.println("There is " + numLettersCorrect + " " + guessedLetter + " in the word");
-            } else {
+            }
+            else {
                 System.out.println("There are " + numLettersCorrect + " " + guessedLetter + "s in the word");
             }
 
             isInWord = true;
-        } else {
+        }
+        else {
             System.out.println("The letter " + guessedLetter + " is not in the word");
             incorrectLetters.add(guessedLetter);
         }
@@ -125,7 +153,13 @@ public class Display {
     }
 
     public boolean alreadyGuessed(String guessedLetter) {
-        return guessedWord.contains(guessedLetter.charAt(0)) || incorrectLetters.contains(guessedLetter);
+        if (guessedWord.contains(guessedLetter.charAt(0)) || incorrectLetters.contains(guessedLetter)) {
+            System.out.println("You have already guessed " + guessedLetter + "! Please try again!");
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     private void displayGuessedWord() {
@@ -166,5 +200,15 @@ public class Display {
 
     public void displayNumGuesses(int numGuesses, int numIncorrect, int numCorrect) {
         System.out.println("Guesses: " + numGuesses + " Correct: " + numCorrect + " Incorrect: " + numIncorrect);
+    }
+
+    public void displayEndGame(int numWords, int numWordsCorrect) {
+        if (numWords == 0) {
+            System.out.println("You have attempted to guess all of my words!");
+        }
+        else {
+            System.out.println("Thanks for playing!");
+        }
+        System.out.println("You got " + numWordsCorrect + " correct out of 10");
     }
 }

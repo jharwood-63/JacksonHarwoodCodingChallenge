@@ -9,7 +9,6 @@ public class GameController {
     }
 
     public static void playGame() {
-        Scanner scanner = new Scanner(System.in);
         Words words = new Words();
         Display display = new Display();
 
@@ -24,34 +23,28 @@ public class GameController {
         int numIncorrect;
 
         display.displayWelcome();
-        while (continueGame && numWords > 0) {
+        while (continueGame) {
             selectedWord = words.selectWord();
             display.initializeGuessedWord(selectedWord);
             display.displayNumLetters(selectedWord);
 
-            useGallows = false;
             numBodyParts = 6;
             numGuessesMade = 0;
             numIncorrect = 0;
             numCorrect = 0;
             numWords--;
-
-            System.out.print("Would you like to play with gallows? Enter y or n: ");
-            String chooseGallows = scanner.nextLine();
-            if (chooseGallows.equalsIgnoreCase("y")) {
-                useGallows = true;
-                display.displayGallows();
-            }
+            useGallows = display.useGallows();
 
             while (!display.isWordGuessed() && numBodyParts > 0) {
-                System.out.print("Please guess a letter: ");
-                String guessedLetter = scanner.nextLine();
+                String guessedLetter = display.promptGuess();
                 if (!display.alreadyGuessed(guessedLetter)) {
                     numGuessesMade++;
                     boolean isInWord = display.updateGuessedWord(selectedWord, guessedLetter);
+
                     if (isInWord) {
                         numCorrect++;
-                    } else {
+                    }
+                    else {
                         if (useGallows) {
                             display.updateGallows();
                             numBodyParts--;
@@ -60,9 +53,6 @@ public class GameController {
                         numIncorrect++;
                     }
                     display.displayNumGuesses(numGuessesMade, numIncorrect, numCorrect);
-                }
-                else {
-                    System.out.println("You have already guessed " + guessedLetter + "! Please try again!");
                 }
             }
 
@@ -74,17 +64,14 @@ public class GameController {
                 numWordsCorrect++;
             }
 
-            System.out.print("Would you like to continue playing? Enter y or n: ");
-            String continuePrompt = scanner.nextLine();
-            continueGame = continuePrompt.equalsIgnoreCase("y");
+            if (numWords > 0) {
+                continueGame = display.promptContinue();
+            }
+            else {
+                continueGame = false;
+            }
         }
 
-        if (numWords == 0) {
-            System.out.println("You have attempted to guess all of my words!");
-        }
-        else {
-            System.out.println("Thanks for playing!");
-        }
-        System.out.println("You got " + numWordsCorrect + " correct out of 10");
+        display.displayEndGame(numWords, numWordsCorrect);
     }
 }
