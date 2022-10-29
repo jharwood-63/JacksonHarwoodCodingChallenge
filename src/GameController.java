@@ -1,8 +1,6 @@
 import GamePlay.Display;
 import GamePlay.Words;
 
-import java.util.Scanner;
-
 public class GameController {
     public static void main(String[] args) {
         playGame();
@@ -43,6 +41,9 @@ public class GameController {
 
                     if (isInWord) {
                         numCorrect++;
+                        if (useGallows) {
+                            display.displayGallows();
+                        }
                     }
                     else {
                         if (useGallows) {
@@ -53,14 +54,17 @@ public class GameController {
                         numIncorrect++;
                     }
                     display.displayNumGuesses(numGuessesMade, numIncorrect, numCorrect);
+                    display.displayDivider();
                 }
             }
 
             if (numBodyParts == 0) {
-                display.displayResult(selectedWord, numGuessesMade, false);
+                // Word was not guessed and the gallows were being used
+                display.displayResult(selectedWord, numGuessesMade, false, true);
             }
             else {
-                display.displayResult(selectedWord, numGuessesMade, true);
+                // Word was guessed and gallows may have been used
+                display.displayResult(selectedWord, numGuessesMade, true, useGallows);
                 numWordsCorrect++;
             }
 

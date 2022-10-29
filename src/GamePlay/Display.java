@@ -23,13 +23,7 @@ public class Display {
     public boolean useGallows() {
         System.out.print("Would you like to play with gallows? Enter y or n: ");
         String chooseGallows = scanner.nextLine();
-        if (chooseGallows.equalsIgnoreCase("y")) {
-            displayGallows();
-            return true;
-        }
-        else {
-            return false;
-        }
+        return chooseGallows.equalsIgnoreCase("y");
     }
 
     public void updateGallows() {
@@ -187,14 +181,21 @@ public class Display {
         System.out.println();
     }
 
-    public void displayResult(String selectedWord, int numGuesses, boolean guessedWord) {
+    public void displayResult(String selectedWord, int numGuesses, boolean guessedWord, boolean useGallows) {
         if (guessedWord) {
             System.out.println("Congratulations! You guessed the word " + selectedWord + " correctly!");
-            System.out.println("You saved Bowly's life! And it only took you " + numGuesses + " guesses!");
+            if (useGallows) {
+                System.out.println("You saved Bowly's life! And it only took you " + numGuesses + " guesses!");
+            }
+            else {
+                System.out.println("And it only took you " + numGuesses + " guesses!");
+            }
         }
         else {
-            System.out.println("Oh no! Bowly was hanged for his crimes!");
-            System.out.println("The word was " + selectedWord + "!");
+            if (useGallows) {
+                System.out.println("Oh no! Bowly was hanged for his crimes!");
+            }
+            System.out.println("The word was " + selectedWord + "! You made " + numGuesses + "guesses!");
         }
     }
 
@@ -209,6 +210,10 @@ public class Display {
         else {
             System.out.println("Thanks for playing!");
         }
-        System.out.println("You got " + numWordsCorrect + " correct out of 10");
+        System.out.println("You got " + numWordsCorrect + " word correct out of 10");
+    }
+
+    public void displayDivider() {
+        System.out.println("//////////////////////////////////");
     }
 }
