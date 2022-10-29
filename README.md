@@ -17,3 +17,6 @@ If something other than these two options is entered when asked to use the gallo
 The Words class contains the list of words and selects a random one. It does not allow repeat words to be used.
 The Display class deals with everything printed to the terminal.
 The GameController class is where the actual game play happens.
+
+# Time Used
+3 Hours 27 Minutes 22 Seconds
