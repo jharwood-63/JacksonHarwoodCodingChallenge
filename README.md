@@ -20,3 +20,10 @@ The GameController class is where the actual game play happens.
 
 # Time Used
 3 Hours 27 Minutes 22 Seconds
+
+# Errors found after time expired
+Later in the day, after I had finished my coding challenge, I let someone play the hangman game and I discovered that if they wanted to continue playing they could not
+guess letters that they had previously guessed in the previous round and the gallows did not reset when a new round was started. To fix this I added lines 26-27 in the
+Display.java file. Line 26 clears the list of letters that had been incorrectly guessed when the user decides to play again. Line 27 resets the numBodyParts variable
+which is used to decide how many body parts to print in the gallows. I also added a space on line 224 in the Display.java file. This has nothing to do with the
+functionality of the game, I just added the space to make it look nicer.
