@@ -23,6 +23,8 @@ public class Display {
         String continuePrompt = scanner.nextLine();
 
         if (continuePrompt.equalsIgnoreCase("y")) {
+            incorrectLetters.clear(); // Added line 26-27 to reset the incorrect letter list and gallows when the user continues playing
+            numBodyParts = 0;
             return true;
         }
         else if (continuePrompt.equalsIgnoreCase("n")) {
@@ -219,7 +221,7 @@ public class Display {
             if (useGallows) {
                 System.out.println("Oh no! Bowly was hanged for his crimes!");
             }
-            System.out.println("The word was " + selectedWord + "! You made " + numGuesses + "guesses!");
+            System.out.println("The word was " + selectedWord + "! You made " + numGuesses + " guesses!"); // Added a space after numGuesses
         }
     }
 
